@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="28c5ee30a12f4427983948a6716bb485" Name="Diagram1">
+        <EntityTypeShape EntityType="db_musicModel.Customers" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_musicModel.Genres" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_musicModel.Orders" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_musicModel.Records" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_musicModel.Sales" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_musicModel.Sellers" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <AssociationConnector Association="db_musicModel.FK__Orders__Customer__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="db_musicModel.FK__Records__GenreId__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="db_musicModel.FK__Sales__GenreId__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="db_musicModel.FK__Orders__RecordId__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="db_musicModel.FK__Orders__SaleId__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="db_musicModel.FK__Orders__SellerId__36B12243" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

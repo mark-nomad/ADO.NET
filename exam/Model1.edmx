@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище db_musicModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="TotalSum" Type="money" />
+          <Property Name="Discount" Type="numeric" Precision="21" Scale="5" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GenreName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="SellerId" Type="int" />
+          <Property Name="RecordId" Type="int" />
+          <Property Name="ProductCount" Type="int" />
+          <Property Name="CustomerId" Type="int" />
+          <Property Name="SaleId" Type="int" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateAdd" Type="datetime" />
+          <Property Name="RecordName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TeamdName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PublisherName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountTracks" Type="int" />
+          <Property Name="GenreId" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="CostPrice" Type="money" />
+          <Property Name="SellPrice" Type="money" />
+          <Property Name="RecordsCount" Type="int" />
+          <Property Name="Prodano" Type="int" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GenreId" Type="int" />
+          <Property Name="Discount" Type="int" />
+          <Property Name="DateBegin" Type="datetime" Nullable="false" />
+          <Property Name="DateEnd" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sellers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Login" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Orders__Customer__398D8EEE">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__RecordId__37A5467C">
+          <End Role="Records" Type="Self.Records" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="RecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__SaleId__3A81B327">
+          <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__SellerId__36B12243">
+          <End Role="Sellers" Type="Self.Sellers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sellers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Records__GenreId__286302EC">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Records" Type="Self.Records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Records">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sales__GenreId__31EC6D26">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище db_musicModelContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sellers" EntityType="Self.Sellers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Orders__Customer__398D8EEE" Association="Self.FK__Orders__Customer__398D8EEE">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__RecordId__37A5467C" Association="Self.FK__Orders__RecordId__37A5467C">
+            <End Role="Records" EntitySet="Records" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__SaleId__3A81B327" Association="Self.FK__Orders__SaleId__3A81B327">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__SellerId__36B12243" Association="Self.FK__Orders__SellerId__36B12243">
+            <End Role="Sellers" EntitySet="Sellers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Records__GenreId__286302EC" Association="Self.FK__Records__GenreId__286302EC">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Records" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sales__GenreId__31EC6D26" Association="Self.FK__Sales__GenreId__31EC6D26">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_musicModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="TotalSum" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Discount" Type="Decimal" Precision="21" Scale="5" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__398D8EEE" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GenreName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Records" Relationship="Self.FK__Records__GenreId__286302EC" FromRole="Genres" ToRole="Records" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK__Sales__GenreId__31EC6D26" FromRole="Genres" ToRole="Sales" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SellerId" Type="Int32" />
+          <Property Name="RecordId" Type="Int32" />
+          <Property Name="ProductCount" Type="Int32" />
+          <Property Name="CustomerId" Type="Int32" />
+          <Property Name="SaleId" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Orders__Customer__398D8EEE" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="Records" Relationship="Self.FK__Orders__RecordId__37A5467C" FromRole="Orders" ToRole="Records" />
+          <NavigationProperty Name="Sales" Relationship="Self.FK__Orders__SaleId__3A81B327" FromRole="Orders" ToRole="Sales" />
+          <NavigationProperty Name="Sellers" Relationship="Self.FK__Orders__SellerId__36B12243" FromRole="Orders" ToRole="Sellers" />
+        </EntityType>
+        <EntityType Name="Records">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
+          <Property Name="RecordName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TeamdName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PublisherName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountTracks" Type="Int32" />
+          <Property Name="GenreId" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="CostPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SellPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RecordsCount" Type="Int32" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK__Records__GenreId__286302EC" FromRole="Records" ToRole="Genres" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__RecordId__37A5467C" FromRole="Records" ToRole="Orders" />
+          <Property Name="Prodano" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GenreId" Type="Int32" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="DateBegin" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Genres" Relationship="Self.FK__Sales__GenreId__31EC6D26" FromRole="Sales" ToRole="Genres" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__SaleId__3A81B327" FromRole="Sales" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Sellers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__SellerId__36B12243" FromRole="Sellers" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK__Orders__Customer__398D8EEE">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Records__GenreId__286302EC">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Records" Type="Self.Records" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Records">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sales__GenreId__31EC6D26">
+          <End Role="Genres" Type="Self.Genres" Multiplicity="0..1" />
+          <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__RecordId__37A5467C">
+          <End Role="Records" Type="Self.Records" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Records">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="RecordId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__SaleId__3A81B327">
+          <End Role="Sales" Type="Self.Sales" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sales">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SaleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__SellerId__36B12243">
+          <End Role="Sellers" Type="Self.Sellers" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sellers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="SellerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_musicEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="Genres" EntityType="Self.Genres" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Records" EntityType="Self.Records" />
+          <EntitySet Name="Sales" EntityType="Self.Sales" />
+          <EntitySet Name="Sellers" EntityType="Self.Sellers" />
+          <AssociationSet Name="FK__Orders__Customer__398D8EEE" Association="Self.FK__Orders__Customer__398D8EEE">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Records__GenreId__286302EC" Association="Self.FK__Records__GenreId__286302EC">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Records" EntitySet="Records" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sales__GenreId__31EC6D26" Association="Self.FK__Sales__GenreId__31EC6D26">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__RecordId__37A5467C" Association="Self.FK__Orders__RecordId__37A5467C">
+            <End Role="Records" EntitySet="Records" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__SaleId__3A81B327" Association="Self.FK__Orders__SaleId__3A81B327">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__SellerId__36B12243" Association="Self.FK__Orders__SellerId__36B12243">
+            <End Role="Sellers" EntitySet="Sellers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище db_musicModelContainer" CdmEntityContainer="db_musicEntities1">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="db_musicModel.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="TotalSum" ColumnName="TotalSum" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="db_musicModel.Genres">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="GenreName" ColumnName="GenreName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="db_musicModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="SellerId" ColumnName="SellerId" />
+                <ScalarProperty Name="RecordId" ColumnName="RecordId" />
+                <ScalarProperty Name="ProductCount" ColumnName="ProductCount" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Records">
+            <EntityTypeMapping TypeName="db_musicModel.Records">
+              <MappingFragment StoreEntitySet="Records">
+                <ScalarProperty Name="Prodano" ColumnName="Prodano" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
+                <ScalarProperty Name="RecordName" ColumnName="RecordName" />
+                <ScalarProperty Name="TeamdName" ColumnName="TeamdName" />
+                <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />
+                <ScalarProperty Name="CountTracks" ColumnName="CountTracks" />
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="CostPrice" ColumnName="CostPrice" />
+                <ScalarProperty Name="SellPrice" ColumnName="SellPrice" />
+                <ScalarProperty Name="RecordsCount" ColumnName="RecordsCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sales">
+            <EntityTypeMapping TypeName="db_musicModel.Sales">
+              <MappingFragment StoreEntitySet="Sales">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GenreId" ColumnName="GenreId" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DateBegin" ColumnName="DateBegin" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sellers">
+            <EntityTypeMapping TypeName="db_musicModel.Sellers">
+              <MappingFragment StoreEntitySet="Sellers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
